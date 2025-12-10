@@ -1,0 +1,20 @@
+# --- Ignorar Dependencias ---
+node_modules/
+*/node_modules/
+
+# --- Ignorar Variables de Entorno (SEGURIDAD) ---
+.env
+.env.*
+*/.env
+
+# --- Ignorar Builds de Producción ---
+dist/
+build/
+*/dist/
+*/build/
+
+# --- Sistema Operativo y Logs ---
+.DS_Store
+Thumbs.db
+*.log
+coverage/

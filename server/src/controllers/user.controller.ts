@@ -1,3 +1,4 @@
+import { Request, Response, NextFunction } from 'express';
 import userService from '../services/user.service.js';
 
 /**
@@ -12,13 +13,13 @@ import userService from '../services/user.service.js';
 
 // Usamos una función wrapper para capturar errores asíncronos sin try-catch explícitos
 // Alternativamente, se puede usar una librería como 'express-async-errors' o un wrapper utilitario.
-const catchAsync = (fn) => {
-    return (req, res, next) => {
+const catchAsync = (fn: (req: Request, res: Response, next: NextFunction) => Promise<any>) => {
+    return (req: Request, res: Response, next: NextFunction) => {
         fn(req, res, next).catch(next);
     };
 };
 
-export const getAllUsers = catchAsync(async (req, res) => {
+export const getAllUsers = catchAsync(async (req: Request, res: Response) => {
     const users = await userService.getAllUsers();
 
     res.status(200).json({
@@ -28,7 +29,7 @@ export const getAllUsers = catchAsync(async (req, res) => {
     });
 });
 
-export const getUser = catchAsync(async (req, res) => {
+export const getUser = catchAsync(async (req: Request, res: Response) => {
     const user = await userService.getUserById(req.params.id);
 
     res.status(200).json({
@@ -37,7 +38,7 @@ export const getUser = catchAsync(async (req, res) => {
     });
 });
 
-export const createUser = catchAsync(async (req, res) => {
+export const createUser = catchAsync(async (req: Request, res: Response) => {
     const newUser = await userService.createUser(req.body);
 
     res.status(201).json({

@@ -27,7 +27,7 @@ const server = app.listen(PORT, () => {
  * Captura promesas rechazadas que no han sido manejadas (ej: fallo de conexión a DB).
  * Es buena práctica cerrar el servidor ordenadamente antes de salir.
  */
-process.on('unhandledRejection', (err) => {
+process.on('unhandledRejection', (err: Error) => {
     logger.error('UNHANDLED REJECTION! 💥 Shutting down...');
     logger.error(err.name, err.message);
     server.close(() => {

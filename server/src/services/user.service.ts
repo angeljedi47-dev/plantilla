@@ -1,7 +1,13 @@
 import { AppError } from '../utils/AppError.js';
 
+interface User {
+    id: number;
+    name: string;
+    email: string;
+}
+
 // Mock database
-const users = [
+const users: User[] = [
     { id: 1, name: 'John Doe', email: 'john@example.com' },
     { id: 2, name: 'Jane Doe', email: 'jane@example.com' },
 ];
@@ -16,12 +22,12 @@ const users = [
  */
 class UserService {
 
-    async getAllUsers() {
+    async getAllUsers(): Promise<User[]> {
         // Simular llamada a base de datos
         return users;
     }
 
-    async getUserById(id) {
+    async getUserById(id: string): Promise<User> {
         const user = users.find(u => u.id === parseInt(id));
 
         if (!user) {
@@ -32,13 +38,13 @@ class UserService {
         return user;
     }
 
-    async createUser(data) {
+    async createUser(data: Omit<User, 'id'>): Promise<User> {
         // Validación de negocio (simple)
         if (!data.name || !data.email) {
             throw new AppError('Name and email are required', 400);
         }
 
-        const newUser = {
+        const newUser: User = {
             id: users.length + 1,
             ...data
         };

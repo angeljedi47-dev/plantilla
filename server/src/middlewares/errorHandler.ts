@@ -8,7 +8,10 @@ import logger from '../utils/logger.js';
  * repetidos en cada controlador. Captura cualquier error que ocurra
  * en el flujo de la solicitud y envía una respuesta consistente al cliente.
  */
-const globalErrorHandler = (err, req, res, next) => {
+import { Request, Response, NextFunction } from 'express';
+import { AppError } from '../utils/AppError.js';
+
+const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
     err.statusCode = err.statusCode || 500;
     err.status = err.status || 'error';
 
@@ -22,7 +25,7 @@ const globalErrorHandler = (err, req, res, next) => {
     }
 };
 
-const sendErrorDev = (err, res) => {
+const sendErrorDev = (err: any, res: Response) => {
     logger.error('ERROR 💥', err);
     res.status(err.statusCode).json({
         status: err.status,
@@ -32,7 +35,7 @@ const sendErrorDev = (err, res) => {
     });
 };
 
-const sendErrorProd = (err, res) => {
+const sendErrorProd = (err: any, res: Response) => {
     // Errores operacionales, confiables: enviar mensaje al cliente
     if (err.isOperational) {
         res.status(err.statusCode).json({

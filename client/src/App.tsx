@@ -1,10 +1,16 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
 function App() {
-  const [users, setUsers] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [users, setUsers] = useState<User[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     // LLAMADA AL BACKEND
